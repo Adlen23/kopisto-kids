@@ -12,13 +12,24 @@ import Image from 'next/image'
 
 const pageCards = [
   {
-    title: 'ألعاب تعليمية',
-    description: 'اكتشف أكثر من 8 ألعاب تعليمية ممتعة في الرياضيات واللغة والعلوم!',
-    icon: '🎮',
-    href: '/games',
+    title: 'عدّاء كوبيستو',
+    description: 'اقفز على المنصات واجمع الإجابة الصحيحة! لعبة بلاتفورمر 2D بأسلوب ماريو!',
+    icon: '🏃',
+    href: '/play/math-runner',
     gradient: 'from-purple-500 to-violet-600',
     bg: 'from-purple-50 to-violet-50',
-    emoji: '🚀',
+    emoji: '🔥',
+    tag: 'جديد',
+  },
+  {
+    title: 'مغامرة الحروف',
+    description: 'اقفز واجمع الحروف العربية بالترتيب! لعبة بلاتفورمر ممتعة ومعلومة!',
+    icon: '📖',
+    href: '/play/letter-adventure',
+    gradient: 'from-amber-500 to-orange-600',
+    bg: 'from-amber-50 to-orange-50',
+    emoji: '🔥',
+    tag: 'جديد',
   },
   {
     title: 'لعبة العد',
@@ -39,12 +50,21 @@ const pageCards = [
     emoji: '🃏',
   },
   {
+    title: 'جميع الألعاب',
+    description: 'اكتشف كل الألعاب التعليمية المتاحة! رياضيات، لغة، علوم والمزيد.',
+    icon: '🎮',
+    href: '/games',
+    gradient: 'from-blue-500 to-indigo-600',
+    bg: 'from-blue-50 to-indigo-50',
+    emoji: '🚀',
+  },
+  {
     title: 'طريق التعلّم',
     description: 'اختر المادة التعليمية وابدأ مغامرتك! رياضيات، لغة، علوم والمزيد.',
     icon: '📚',
     href: '/learn',
-    gradient: 'from-blue-500 to-indigo-600',
-    bg: 'from-blue-50 to-indigo-50',
+    gradient: 'from-emerald-500 to-teal-600',
+    bg: 'from-emerald-50 to-teal-50',
     emoji: '📖',
   },
   {
@@ -52,8 +72,8 @@ const pageCards = [
     description: 'تعرّف على صديقك المفضل! حقائق ممتعة ومعلومات عن كوبيستو.',
     icon: '🦊',
     href: '/about',
-    gradient: 'from-amber-500 to-orange-600',
-    bg: 'from-amber-50 to-orange-50',
+    gradient: 'from-cyan-500 to-blue-600',
+    bg: 'from-cyan-50 to-blue-50',
     emoji: '🌟',
   },
   {
@@ -61,8 +81,8 @@ const pageCards = [
     description: 'اجمع النجوم وحقق الإنجازات! كل لعبة تقربك من لقب البطل.',
     icon: '🏆',
     href: '/rewards',
-    gradient: 'from-emerald-500 to-teal-600',
-    bg: 'from-emerald-50 to-teal-50',
+    gradient: 'from-yellow-500 to-amber-600',
+    bg: 'from-yellow-50 to-amber-50',
     emoji: '⭐',
   },
 ]
@@ -117,10 +137,15 @@ export default function Home() {
                   {/* Icon */}
                   <div className="flex items-start justify-between mb-4">
                     <motion.div
-                      className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center text-3xl shadow-lg`}
+                      className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center text-3xl shadow-lg relative`}
                       whileHover={{ rotate: [0, -10, 10, 0] }}
                     >
                       {card.icon}
+                      {'tag' in card && card.tag && (
+                        <span className="absolute -top-2 -left-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">
+                          {card.tag}
+                        </span>
+                      )}
                     </motion.div>
                     <motion.span
                       className="text-3xl opacity-30 group-hover:opacity-60 transition-opacity"
