@@ -277,101 +277,56 @@ export default function MathRunnerGame() {
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
 
-    const drawKopisto = (ctx: CanvasRenderingContext2D, x: number, y: number, direction: number, frame: number) => {
+    // Load Kopisto character image
+    const kopistoImg = new Image()
+    kopistoImg.crossOrigin = 'anonymous'
+    kopistoImg.src = '/kopisto.jpeg'
+
+    const drawKopisto = (ctx: CanvasRenderingContext2D, x: number, y: number, direction: number, frame: number, isMoving: boolean = false, isJumping: boolean = false) => {
       ctx.save()
-      ctx.translate(x + PLAYER_WIDTH / 2, y)
+      ctx.translate(x + PLAYER_WIDTH / 2, y + PLAYER_HEIGHT / 2)
       ctx.scale(direction, 1)
 
-      // Body
-      ctx.fillStyle = '#8B5CF6'
+      // Squish/stretch animation
+      let scaleX = 1
+      let scaleY = 1
+      if (isJumping) {
+        scaleX = 0.85
+        scaleY = 1.15
+      } else if (isMoving) {
+        const bounce = Math.sin(frame * 0.3) * 0.05
+        scaleX = 1 + bounce
+        scaleY = 1 - bounce
+      }
+
+      // Shadow under character
+      ctx.fillStyle = 'rgba(0,0,0,0.15)'
       ctx.beginPath()
-      ctx.roundRect(4, 18, 32, 28, 6)
+      ctx.ellipse(0, PLAYER_HEIGHT / 2 + 2, PLAYER_WIDTH * 0.4, 4, 0, 0, Math.PI * 2)
       ctx.fill()
 
-      // Head
-      ctx.fillStyle = '#A78BFA'
-      ctx.beginPath()
-      ctx.arc(20, 14, 14, 0, Math.PI * 2)
-      ctx.fill()
+      ctx.scale(scaleX, scaleY)
 
-      // Ears
-      ctx.fillStyle = '#8B5CF6'
-      ctx.beginPath()
-      ctx.moveTo(8, 4)
-      ctx.lineTo(2, -8)
-      ctx.lineTo(14, 0)
-      ctx.fill()
-      ctx.beginPath()
-      ctx.moveTo(26, 2)
-      ctx.lineTo(34, -8)
-      ctx.lineTo(30, 6)
-      ctx.fill()
-
-      // Inner ears
-      ctx.fillStyle = '#DDD6FE'
-      ctx.beginPath()
-      ctx.moveTo(9, 2)
-      ctx.lineTo(5, -4)
-      ctx.lineTo(13, 1)
-      ctx.fill()
-
-      // Eyes
-      ctx.fillStyle = '#1E1B4B'
-      ctx.beginPath()
-      ctx.arc(14, 12, 3, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.beginPath()
-      ctx.arc(24, 12, 3, 0, Math.PI * 2)
-      ctx.fill()
-
-      // Eye shine
-      ctx.fillStyle = '#FFFFFF'
-      ctx.beginPath()
-      ctx.arc(15, 11, 1.2, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.beginPath()
-      ctx.arc(25, 11, 1.2, 0, Math.PI * 2)
-      ctx.fill()
-
-      // Nose
-      ctx.fillStyle = '#5B21B6'
-      ctx.beginPath()
-      ctx.arc(20, 16, 2, 0, Math.PI * 2)
-      ctx.fill()
-
-      // Mouth - smile
-      ctx.strokeStyle = '#5B21B6'
-      ctx.lineWidth = 1.5
-      ctx.beginPath()
-      ctx.arc(20, 17, 4, 0.1 * Math.PI, 0.9 * Math.PI)
-      ctx.stroke()
-
-      // Belly
-      ctx.fillStyle = '#DDD6FE'
-      ctx.beginPath()
-      ctx.roundRect(10, 24, 20, 16, 4)
-      ctx.fill()
-
-      // Legs - animated
-      const legOffset = Math.sin(frame * 0.3) * 5
-      ctx.fillStyle = '#7C3AED'
-      // Left leg
-      ctx.beginPath()
-      ctx.roundRect(8, 44, 8, 8 + legOffset, 3)
-      ctx.fill()
-      // Right leg
-      ctx.beginPath()
-      ctx.roundRect(24, 44, 8, 8 - legOffset, 3)
-      ctx.fill()
-
-      // Shoes
-      ctx.fillStyle = '#5B21B6'
-      ctx.beginPath()
-      ctx.roundRect(6, 50 + legOffset, 12, 5, 2)
-      ctx.fill()
-      ctx.beginPath()
-      ctx.roundRect(22, 50 - legOffset, 12, 5, 2)
-      ctx.fill()
+      // Draw the actual Kopisto image
+      const imgW = PLAYER_WIDTH + 10
+      const imgH = PLAYER_HEIGHT + 10
+      if (kopistoImg.complete && kopistoImg.naturalWidth > 0) {
+        ctx.beginPath()
+        ctx.arc(0, 0, imgW / 2, 0, Math.PI * 2)
+        ctx.clip()
+        ctx.drawImage(kopistoImg, -imgW / 2, -imgH / 2, imgW, imgH)
+      } else {
+        // Fallback while loading
+        ctx.fillStyle = '#8B5CF6'
+        ctx.beginPath()
+        ctx.arc(0, 0, PLAYER_WIDTH / 2, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.fillStyle = '#FFFFFF'
+        ctx.font = 'bold 16px Fredoka, sans-serif'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText('ك', 0, 0)
+      }
 
       ctx.restore()
     }
@@ -580,7 +535,7 @@ export default function MathRunnerGame() {
         drawBackground(ctx, g.cameraX, g.frameCount)
         for (const p of ld.platforms) drawPlatform(ctx, p, g.cameraX)
         for (const c of ld.collectibles) drawCollectible(ctx, c, g.cameraX, g.frameCount)
-        drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount)
+        drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, false, false)
         drawParticles(ctx)
         drawHUD(ctx, g)
         animFrameRef.current = requestAnimationFrame(gameLoop)
@@ -705,10 +660,11 @@ export default function MathRunnerGame() {
       }
 
       // Draw everything
+      const isMoving = g.playerVX !== 0
       drawBackground(ctx, g.cameraX, g.frameCount)
       for (const p of ld.platforms) drawPlatform(ctx, p, g.cameraX)
       for (const c of ld.collectibles) drawCollectible(ctx, c, g.cameraX, g.frameCount)
-      drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount)
+      drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, isMoving, g.isJumping)
       drawParticles(ctx)
       drawHUD(ctx, g)
 
