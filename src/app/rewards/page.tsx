@@ -3,14 +3,12 @@
 import Navbar from '@/components/kopisto/Navbar'
 import RewardsSection from '@/components/kopisto/RewardsSection'
 import Footer from '@/components/kopisto/Footer'
-import FloatingElements from '@/components/kopisto/FloatingElements'
 
 export default function RewardsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-purple-50 relative overflow-x-hidden">
-      <FloatingElements />
+    <div className="min-h-screen flex flex-col bg-sky-50 relative overflow-x-hidden">
       <Navbar />
-      <main className="pt-24">
+      <main className="flex-1 pt-20">
         <RewardsSection />
       </main>
       <Footer />

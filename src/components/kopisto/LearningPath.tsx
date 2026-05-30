@@ -14,47 +14,47 @@ interface Subject {
 
 const subjects: Subject[] = [
   {
-    name: 'الرياضيات',
+    name: 'Mathematics',
     icon: '🔢',
-    color: 'from-purple-500 to-violet-600',
-    bg: 'bg-purple-50',
-    description: 'الأرقام والجمع والطرح بطريقة ممتعة',
+    color: 'from-sky-500 to-sky-600',
+    bg: 'bg-sky-50',
+    description: 'Numbers, addition & subtraction the fun way',
     lessons: 12,
     progress: 75,
   },
   {
-    name: 'اللغة العربية',
+    name: 'Arabic Language',
     icon: '📖',
-    color: 'from-fuchsia-500 to-pink-600',
-    bg: 'bg-fuchsia-50',
-    description: 'الحروف والكلمات والجمل الجميلة',
+    color: 'from-amber-500 to-orange-600',
+    bg: 'bg-amber-50',
+    description: 'Letters, words and beautiful sentences',
     lessons: 15,
     progress: 60,
   },
   {
-    name: 'العلوم',
+    name: 'Science',
     icon: '🔬',
-    color: 'from-emerald-500 to-teal-600',
-    bg: 'bg-emerald-50',
-    description: 'اكتشف أسرار الطبيعة والكون',
+    color: 'from-teal-500 to-teal-600',
+    bg: 'bg-teal-50',
+    description: 'Discover nature and the universe',
     lessons: 10,
     progress: 40,
   },
   {
-    name: 'اللغة الإنجليزية',
+    name: 'English',
     icon: '🌍',
-    color: 'from-blue-500 to-cyan-600',
+    color: 'from-blue-500 to-blue-600',
     bg: 'bg-blue-50',
-    description: 'تعلّم كلمات وعبارات جديدة',
+    description: 'Learn new words and phrases',
     lessons: 14,
     progress: 55,
   },
   {
-    name: 'الفنون',
+    name: 'Arts',
     icon: '🎨',
-    color: 'from-rose-500 to-orange-600',
-    bg: 'bg-rose-50',
-    description: 'ارسم ولوّن وأبدع مع كوبيستو',
+    color: 'from-orange-500 to-orange-600',
+    bg: 'bg-orange-50',
+    description: 'Draw, color and create with Kopisto',
     lessons: 8,
     progress: 85,
   },
@@ -62,13 +62,11 @@ const subjects: Subject[] = [
 
 export default function LearningPath() {
   return (
-    <section id="learn" className="py-20 bg-purple-50/50 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-20 right-10 w-32 h-32 bg-purple-200/30 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-40 h-40 bg-violet-200/30 rounded-full blur-3xl" />
+    <section id="learn" className="py-16 md:py-20 bg-sky-50/50 relative overflow-hidden">
+      <div className="absolute top-20 right-10 w-32 h-32 bg-sky-200/30 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-10 w-40 h-40 bg-sky-200/30 rounded-full blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        {/* Section Header */}
         <motion.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 30 }}
@@ -82,24 +80,16 @@ export default function LearningPath() {
           >
             📚
           </motion.span>
-          <h2 className="text-3xl md:text-4xl font-bold text-purple-900 mb-4">
-            طريق <span className="bg-gradient-to-l from-purple-600 to-violet-500 bg-clip-text text-transparent">التعلّم</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-sky-900 mb-4">
+            Learning <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Path</span>
           </h2>
-          <p className="text-purple-600/70 text-lg max-w-2xl mx-auto">
-            اختر المادة التي تريد تعلّمها وابدأ مغامرتك التعليمية مع كوبيستو!
+          <p className="text-sky-600/70 text-lg max-w-2xl mx-auto">
+            Choose the subject you want to learn and start your educational adventure with Kopisto!
           </p>
         </motion.div>
 
-        {/* Learning Path - Connected Cards */}
         <div className="relative">
-          {/* Connection Line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-l from-purple-200 via-violet-300 to-purple-200 -translate-y-1/2 rounded-full" />
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-l from-purple-400 via-violet-500 to-purple-400 -translate-y-1/2 rounded-full animate-dash"
-            style={{
-              backgroundSize: '20px 20px',
-              backgroundImage: 'repeating-linear-gradient(90deg, #8b5cf6, #8b5cf6 10px, transparent 10px, transparent 20px)',
-            }}
-          />
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-sky-200 via-sky-300 to-sky-200 -translate-y-1/2 rounded-full" />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {subjects.map((subject, index) => (
@@ -116,7 +106,6 @@ export default function LearningPath() {
                   whileHover={{ y: -8, scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  {/* Subject Icon */}
                   <div className="relative mb-4">
                     <motion.div
                       className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-3xl shadow-md mx-auto"
@@ -125,33 +114,29 @@ export default function LearningPath() {
                     >
                       {subject.icon}
                     </motion.div>
-                    {/* Step number */}
-                    <div className={`absolute -top-2 -right-2 w-7 h-7 rounded-full bg-gradient-to-l ${subject.color} text-white text-xs font-bold flex items-center justify-center shadow-md`}>
+                    <div className={`absolute -top-2 -right-2 w-7 h-7 rounded-full bg-gradient-to-r ${subject.color} text-white text-xs font-bold flex items-center justify-center shadow-md`}>
                       {index + 1}
                     </div>
                   </div>
 
-                  {/* Subject Info */}
-                  <h3 className="font-bold text-purple-900 text-center mb-1">{subject.name}</h3>
-                  <p className="text-purple-600/60 text-xs text-center mb-3">{subject.description}</p>
+                  <h3 className="font-bold text-sky-900 text-center mb-1">{subject.name}</h3>
+                  <p className="text-sky-600/60 text-xs text-center mb-3">{subject.description}</p>
 
-                  {/* Progress Bar */}
                   <div className="bg-white rounded-full h-2.5 overflow-hidden mb-2">
                     <motion.div
-                      className={`h-full rounded-full bg-gradient-to-l ${subject.color}`}
+                      className={`h-full rounded-full bg-gradient-to-r ${subject.color}`}
                       initial={{ width: 0 }}
                       whileInView={{ width: `${subject.progress}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 1, delay: index * 0.15 + 0.5 }}
                     />
                   </div>
-                  <div className="flex items-center justify-between text-xs text-purple-500">
-                    <span>{subject.lessons} درس</span>
+                  <div className="flex items-center justify-between text-xs text-sky-500">
+                    <span>{subject.lessons} lessons</span>
                     <span className="font-semibold">{subject.progress}%</span>
                   </div>
 
-                  {/* Hover decoration */}
-                  <div className={`absolute -bottom-8 -right-8 w-24 h-24 bg-gradient-to-l ${subject.color} rounded-full opacity-0 group-hover:opacity-10 transition-opacity`} />
+                  <div className={`absolute -bottom-8 -right-8 w-24 h-24 bg-gradient-to-r ${subject.color} rounded-full opacity-0 group-hover:opacity-10 transition-opacity`} />
                 </motion.div>
               </motion.div>
             ))}

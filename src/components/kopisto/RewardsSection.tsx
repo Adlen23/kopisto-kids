@@ -11,34 +11,32 @@ interface Achievement {
 }
 
 const achievements: Achievement[] = [
-  { title: 'المستكشف', icon: '🧭', description: 'أكمل أول لعبة', earned: true, color: 'from-amber-400 to-orange-500' },
-  { title: 'العبقري', icon: '🧠', description: 'حل 10 ألغاز', earned: true, color: 'from-purple-400 to-violet-600' },
-  { title: 'الفنان', icon: '🎨', description: 'ارسم 5 لوحات', earned: true, color: 'from-pink-400 to-rose-600' },
-  { title: 'النجم', icon: '⭐', description: 'احصل على 50 نجمة', earned: false, color: 'from-yellow-400 to-amber-500' },
-  { title: 'البطل', icon: '🏆', description: 'أكمل جميع المستويات', earned: false, color: 'from-emerald-400 to-teal-600' },
-  { title: 'المبدع', icon: '💡', description: 'اخترع حلولاً جديدة', earned: false, color: 'from-blue-400 to-indigo-600' },
+  { title: 'Explorer', icon: '🧭', description: 'Complete first game', earned: true, color: 'from-amber-400 to-orange-500' },
+  { title: 'Genius', icon: '🧠', description: 'Solve 10 puzzles', earned: true, color: 'from-sky-400 to-sky-600' },
+  { title: 'Artist', icon: '🎨', description: 'Draw 5 paintings', earned: true, color: 'from-pink-400 to-rose-600' },
+  { title: 'Star', icon: '⭐', description: 'Get 50 stars', earned: false, color: 'from-yellow-400 to-amber-500' },
+  { title: 'Champion', icon: '🏆', description: 'Complete all levels', earned: false, color: 'from-emerald-400 to-teal-600' },
+  { title: 'Creative', icon: '💡', description: 'Invent new solutions', earned: false, color: 'from-blue-400 to-indigo-600' },
 ]
 
 const weeklyProgress = [
-  { day: 'السبت', completed: true },
-  { day: 'الأحد', completed: true },
-  { day: 'الاثنين', completed: true },
-  { day: 'الثلاثاء', completed: false },
-  { day: 'الأربعاء', completed: false },
-  { day: 'الخميس', completed: false },
-  { day: 'الجمعة', completed: false },
+  { day: 'Sat', completed: true },
+  { day: 'Sun', completed: true },
+  { day: 'Mon', completed: true },
+  { day: 'Tue', completed: false },
+  { day: 'Wed', completed: false },
+  { day: 'Thu', completed: false },
+  { day: 'Fri', completed: false },
 ]
 
 export default function RewardsSection() {
   return (
-    <section id="rewards" className="py-20 bg-gradient-to-b from-purple-50/50 to-white relative overflow-hidden">
-      {/* Confetti decoration */}
+    <section id="rewards" className="py-16 md:py-20 bg-gradient-to-b from-sky-50/50 to-white relative overflow-hidden">
       <div className="absolute top-10 left-[20%] text-3xl opacity-20 animate-float-slow">🎊</div>
       <div className="absolute top-20 right-[15%] text-2xl opacity-20 animate-float-slow" style={{ animationDelay: '1s' }}>🎉</div>
       <div className="absolute bottom-20 left-[10%] text-3xl opacity-20 animate-float-slow" style={{ animationDelay: '2s' }}>✨</div>
 
       <div className="max-w-6xl mx-auto px-6">
-        {/* Section Header */}
         <motion.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 30 }}
@@ -52,17 +50,17 @@ export default function RewardsSection() {
           >
             🏆
           </motion.span>
-          <h2 className="text-3xl md:text-4xl font-bold text-purple-900 mb-4">
-            إنجازات و<span className="bg-gradient-to-l from-purple-600 to-fuchsia-500 bg-clip-text text-transparent">جوائز</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-sky-900 mb-4">
+            Achievements & <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Rewards</span>
           </h2>
-          <p className="text-purple-600/70 text-lg max-w-2xl mx-auto">
-            اجمع النجوم وحقق الإنجازات! كل لعبة تكملها تقربك من لقب بطل كوبيستو!
+          <p className="text-sky-600/70 text-lg max-w-2xl mx-auto">
+            Collect stars and earn achievements! Every game you complete brings you closer to becoming a Kopisto champion!
           </p>
         </motion.div>
 
         {/* Weekly Challenge */}
         <motion.div
-          className="bg-gradient-to-l from-purple-600 to-violet-500 rounded-3xl p-6 md:p-8 mb-10 text-white relative overflow-hidden"
+          className="bg-gradient-to-r from-sky-500 to-sky-600 rounded-3xl p-6 md:p-8 mb-10 text-white relative overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -73,9 +71,9 @@ export default function RewardsSection() {
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-3xl">🎯</span>
-              <h3 className="text-xl md:text-2xl font-bold">تحدي الأسبوع</h3>
+              <h3 className="text-xl md:text-2xl font-bold">Weekly Challenge</h3>
             </div>
-            <p className="text-white/80 mb-6">أكمل 3 ألعاب يومياً لمدة أسبوع واحصل على شارة المحارب!</p>
+            <p className="text-white/80 mb-6">Complete 3 games daily for a week and earn the Warrior badge!</p>
 
             <div className="flex items-center gap-2 sm:gap-3 justify-center md:justify-start overflow-x-auto no-scrollbar pb-2 -mx-2 px-2">
               {weeklyProgress.map((day, i) => (
@@ -89,7 +87,7 @@ export default function RewardsSection() {
                 >
                   <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm font-bold ${
                     day.completed
-                      ? 'bg-yellow-300 text-purple-900 shadow-lg'
+                      ? 'bg-yellow-300 text-sky-900 shadow-lg'
                       : 'bg-white/20 text-white/60 border border-white/30'
                   }`}>
                     {day.completed ? '⭐' : (i + 1)}
@@ -108,7 +106,7 @@ export default function RewardsSection() {
               key={achievement.title}
               className={`relative rounded-2xl p-4 text-center cursor-pointer transition-all ${
                 achievement.earned
-                  ? 'bg-white border-2 border-purple-100 shadow-lg hover:shadow-xl'
+                  ? 'bg-white border-2 border-sky-100 shadow-lg hover:shadow-xl'
                   : 'bg-gray-50 border-2 border-gray-100 opacity-60'
               }`}
               initial={{ opacity: 0, scale: 0.5 }}
@@ -127,8 +125,8 @@ export default function RewardsSection() {
               >
                 {achievement.earned ? achievement.icon : '🔒'}
               </motion.div>
-              <h4 className="font-bold text-purple-900 text-sm mb-1">{achievement.title}</h4>
-              <p className="text-purple-500/60 text-xs">{achievement.description}</p>
+              <h4 className="font-bold text-sky-900 text-sm mb-1">{achievement.title}</h4>
+              <p className="text-sky-500/60 text-xs">{achievement.description}</p>
 
               {achievement.earned && (
                 <motion.div
@@ -146,7 +144,7 @@ export default function RewardsSection() {
 
         {/* Star Counter */}
         <motion.div
-          className="mt-10 bg-white rounded-2xl p-6 border-2 border-purple-100 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4"
+          className="mt-10 bg-white rounded-2xl p-6 border-2 border-sky-100 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -160,33 +158,33 @@ export default function RewardsSection() {
               ⭐
             </motion.div>
             <div>
-              <div className="text-2xl font-bold text-purple-900">37 نجمة</div>
-              <div className="text-sm text-purple-500">13 نجمة للوصول للمستوى التالي!</div>
+              <div className="text-2xl font-bold text-sky-900">37 Stars</div>
+              <div className="text-sm text-sky-500">13 more stars to reach the next level!</div>
             </div>
           </div>
 
           <div className="flex-1 max-w-xs w-full">
-            <div className="bg-purple-100 rounded-full h-4 overflow-hidden">
+            <div className="bg-sky-100 rounded-full h-4 overflow-hidden">
               <motion.div
-                className="h-full rounded-full bg-gradient-to-l from-yellow-400 to-amber-300"
+                className="h-full rounded-full bg-gradient-to-r from-yellow-400 to-amber-300"
                 initial={{ width: 0 }}
                 whileInView={{ width: '74%' }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.5, delay: 0.3 }}
               />
             </div>
-            <div className="flex justify-between text-xs text-purple-500 mt-1">
-              <span>المستوى 3</span>
-              <span>المستوى 4</span>
+            <div className="flex justify-between text-xs text-sky-500 mt-1">
+              <span>Level 3</span>
+              <span>Level 4</span>
             </div>
           </div>
 
           <motion.button
-            className="bg-gradient-to-l from-purple-600 to-violet-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg text-sm"
+            className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-full font-bold shadow-lg text-sm"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            المزيد من النجوم ✨
+            More Stars ✨
           </motion.button>
         </motion.div>
       </div>

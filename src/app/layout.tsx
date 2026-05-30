@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fredoka } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const fredoka = Fredoka({
   variable: "--font-fredoka",
@@ -10,10 +11,10 @@ const fredoka = Fredoka({
 });
 
 export const metadata: Metadata = {
-  title: "كوبيستو - ألعاب تعليمية للأطفال",
+  title: "Kopisto - ألعاب تعليمية للأطفال | Educational Games for Kids",
   description: "مغامرات تعليمية ممتعة مع كوبيستو! ألعاب تفاعلية تنمي مهارات طفلك في الرياضيات واللغة والعلوم بطريقة مرحة ومسلية.",
-  keywords: ["كوبيستو", "ألعاب تعليمية", "أطفال", "تعلم", "ترفيه", "ألعاب أطفال"],
-  authors: [{ name: "كوبيستو" }],
+  keywords: ["كوبيستو", "Kopisto", "ألعاب تعليمية", "أطفال", "تعلم", "ترفيه", "educational games", "kids"],
+  authors: [{ name: "Kopisto" }],
   icons: {
     icon: "/kopisto-small.webp",
   },
@@ -36,7 +37,9 @@ export default function RootLayout({
         className={`${fredoka.variable} antialiased bg-background text-foreground`}
         style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}
       >
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
         <Toaster />
       </body>
     </html>

@@ -22,127 +22,127 @@ interface Game {
 const games: Game[] = [
   {
     id: 1,
-    title: 'عدّاء كوبيستو',
-    description: 'اقفز على المنصات واجمع الإجابة الصحيحة للسؤال الرياضي! لعبة بلاتفورمر مثيرة بأسلوب ماريو!',
+    title: 'Kopisto Runner',
+    description: 'Jump on platforms and collect the right math answer! A Mario-style platformer!',
     icon: '🏃',
-    color: 'from-purple-500 to-violet-600',
-    gradient: 'from-purple-50 to-violet-50',
-    category: 'رياضيات',
-    difficulty: 'متوسط',
-    players: 'فردي',
+    color: 'from-sky-500 to-sky-600',
+    gradient: 'from-sky-50 to-sky-50',
+    category: 'Math',
+    difficulty: 'Medium',
+    players: 'Solo',
     href: '/play/math-runner',
     playable: true,
-    tag: '🔥 جديد',
+    tag: 'New',
   },
   {
     id: 2,
-    title: 'مغامرة الحروف',
-    description: 'اقفز واجمع الحروف العربية بالترتيب الصحيح! لعبة بلاتفورمر ممتعة لتعلّم الأبجدية!',
+    title: 'Letter Adventure',
+    description: 'Jump and collect Arabic letters in the correct order! A fun alphabet platformer!',
     icon: '📖',
     color: 'from-amber-500 to-orange-600',
     gradient: 'from-amber-50 to-orange-50',
-    category: 'لغة عربية',
-    difficulty: 'متوسط',
-    players: 'فردي',
+    category: 'Language',
+    difficulty: 'Medium',
+    players: 'Solo',
     href: '/play/letter-adventure',
     playable: true,
-    tag: '🔥 جديد',
+    tag: 'New',
   },
   {
     id: 3,
-    title: 'عدّ مع كوبيستو',
-    description: 'تعلّم الأرقام والعد من 1 إلى 20 بطريقة ممتعة! كم ثمرة ترى؟',
+    title: 'Count with Kopisto',
+    description: 'Learn numbers and counting from 1 to 20 in a fun way! How many fruits do you see?',
     icon: '🔢',
-    color: 'from-fuchsia-500 to-pink-600',
-    gradient: 'from-fuchsia-50 to-pink-50',
-    category: 'رياضيات',
-    difficulty: 'سهل',
-    players: 'فردي',
+    color: 'from-teal-500 to-teal-600',
+    gradient: 'from-teal-50 to-teal-50',
+    category: 'Math',
+    difficulty: 'Easy',
+    players: 'Solo',
     href: '/play/counting',
     playable: true,
   },
   {
     id: 4,
-    title: 'ذاكرة كوبيستو',
-    description: 'اختبر ذاكرتك! اقلب البطاقات واعثر على الأزواج المتشابهة!',
+    title: 'Kopisto Memory',
+    description: 'Test your memory! Flip the cards and find matching pairs!',
     icon: '🧠',
-    color: 'from-rose-500 to-red-600',
-    gradient: 'from-rose-50 to-red-50',
-    category: 'ذاكرة',
-    difficulty: 'متوسط',
-    players: 'ثنائي',
+    color: 'from-orange-500 to-orange-600',
+    gradient: 'from-orange-50 to-orange-50',
+    category: 'Memory',
+    difficulty: 'Medium',
+    players: 'Duo',
     href: '/play/memory',
     playable: true,
   },
   {
     id: 5,
-    title: 'عالم الحيوانات',
-    description: 'تعرّف على الحيوانات وأصواتها وبيئاتها في رحلة سافاري مميزة!',
+    title: 'Animal World',
+    description: 'Discover animals, their sounds and habitats on a unique safari journey!',
     icon: '🦁',
     color: 'from-emerald-500 to-teal-600',
     gradient: 'from-emerald-50 to-teal-50',
-    category: 'علوم',
-    difficulty: 'متوسط',
-    players: 'فردي',
+    category: 'Science',
+    difficulty: 'Medium',
+    players: 'Solo',
     href: '#',
     playable: false,
-    tag: 'قريباً',
+    tag: 'Coming',
   },
   {
     id: 6,
-    title: 'ألوان قوس قزح',
-    description: 'تعلّم الألوان وامزجها لاكتشاف ألوان جديدة في ورشة الرسم السحرية!',
+    title: 'Rainbow Colors',
+    description: 'Learn colors and mix them to discover new ones in the magical art workshop!',
     icon: '🎨',
-    color: 'from-cyan-500 to-blue-600',
-    gradient: 'from-cyan-50 to-blue-50',
-    category: 'فنون',
-    difficulty: 'سهل',
-    players: 'فردي',
+    color: 'from-pink-500 to-rose-600',
+    gradient: 'from-pink-50 to-rose-50',
+    category: 'Art',
+    difficulty: 'Easy',
+    players: 'Solo',
     href: '#',
     playable: false,
-    tag: 'قريباً',
+    tag: 'Coming',
   },
   {
     id: 7,
-    title: 'لغز الأشكال',
-    description: 'ركّب الأشكال الهندسية لحل الألغاز وبناء عالم كوبيستو الجميل!',
+    title: 'Shape Puzzle',
+    description: 'Assemble geometric shapes to solve puzzles and build Kopisto\'s beautiful world!',
     icon: '🧩',
-    color: 'from-blue-500 to-indigo-600',
-    gradient: 'from-blue-50 to-indigo-50',
-    category: 'هندسة',
-    difficulty: 'متوسط',
-    players: 'فردي',
+    color: 'from-yellow-500 to-amber-600',
+    gradient: 'from-yellow-50 to-amber-50',
+    category: 'Geometry',
+    difficulty: 'Medium',
+    players: 'Solo',
     href: '#',
     playable: false,
-    tag: 'قريباً',
+    tag: 'Coming',
   },
   {
     id: 8,
-    title: 'موسيقى النجوم',
-    description: 'عزف ألحاناً جميلة وتعلّم الإيقاع مع كوبيستو في حفل النجوم!',
+    title: 'Star Music',
+    description: 'Play beautiful melodies and learn rhythm with Kopisto at the star concert!',
     icon: '🎵',
     color: 'from-violet-500 to-purple-600',
     gradient: 'from-violet-50 to-purple-50',
-    category: 'موسيقى',
-    difficulty: 'سهل',
-    players: 'فردي',
+    category: 'Music',
+    difficulty: 'Easy',
+    players: 'Solo',
     href: '#',
     playable: false,
-    tag: 'قريباً',
+    tag: 'Coming',
   },
 ]
 
-const categories = ['الكل', 'رياضيات', 'لغة عربية', 'علوم', 'فنون', 'هندسة', 'ذاكرة', 'موسيقى']
+const categories = ['All', 'Math', 'Language', 'Science', 'Art', 'Geometry', 'Memory', 'Music']
 
 export default function GamesSection() {
-  const [activeCategory, setActiveCategory] = useState('الكل')
+  const [activeCategory, setActiveCategory] = useState('All')
 
-  const filteredGames = activeCategory === 'الكل'
+  const filteredGames = activeCategory === 'All'
     ? games
     : games.filter(g => g.category === activeCategory)
 
   return (
-    <section id="games" className="py-20 bg-white relative">
+    <section id="games" className="py-16 md:py-20 bg-white relative">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <motion.div
@@ -159,11 +159,11 @@ export default function GamesSection() {
           >
             🎮
           </motion.span>
-          <h2 className="text-3xl md:text-4xl font-bold text-purple-900 mb-4">
-            ألعاب <span className="bg-gradient-to-l from-purple-600 to-violet-500 bg-clip-text text-transparent">ممتعة</span> ومعلومة!
+          <h2 className="text-3xl md:text-4xl font-bold text-sky-900 mb-4">
+            Fun & <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Educational</span> Games!
           </h2>
-          <p className="text-purple-600/70 text-lg max-w-2xl mx-auto">
-            اكتشف مجموعة متنوعة من الألعاب التعليمية المصممة خصيصاً لتنمية مهارات طفلك
+          <p className="text-sky-600/70 text-lg max-w-2xl mx-auto">
+            Discover a variety of educational games designed specifically to develop your child&apos;s skills
           </p>
         </motion.div>
 
@@ -178,10 +178,10 @@ export default function GamesSection() {
           {categories.map((cat) => (
             <motion.button
               key={cat}
-              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                 activeCategory === cat
-                  ? 'bg-gradient-to-l from-purple-600 to-violet-500 text-white shadow-lg shadow-purple-300/30'
-                  : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
+                  ? 'bg-orange-500 text-white shadow-lg shadow-orange-300/30'
+                  : 'bg-sky-100 text-sky-700 hover:bg-sky-200'
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -197,14 +197,14 @@ export default function GamesSection() {
           {filteredGames.map((game, index) => (
             <motion.div
               key={game.id}
-              className="game-card group relative bg-white rounded-2xl border-2 border-purple-50 overflow-hidden"
+              className="game-card group relative bg-white rounded-2xl border-2 border-sky-100 overflow-hidden"
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
               whileHover={{
-                borderColor: '#c084fc',
-                boxShadow: '0 20px 40px rgba(139, 92, 246, 0.15)',
+                borderColor: '#7dd3fc',
+                boxShadow: '0 20px 40px rgba(14, 165, 233, 0.15)',
               }}
             >
               <Link href={game.playable ? game.href : '#'} className={`block ${!game.playable ? 'pointer-events-none' : ''}`}>
@@ -217,37 +217,35 @@ export default function GamesSection() {
                   >
                     {game.icon}
                   </motion.div>
-                  {/* Tag */}
                   {game.tag && (
                     <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-lg text-xs font-bold ${
-                      game.tag === 'قريباً' ? 'bg-gray-200 text-gray-600' : 'bg-red-400 text-white'
+                      game.tag === 'Coming' ? 'bg-gray-200 text-gray-600' : 'bg-orange-400 text-white'
                     }`}>
                       {game.tag}
                     </div>
                   )}
-                  {/* Background decoration */}
                   <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-white/20 rounded-full" />
                   <div className="absolute -top-3 -right-3 w-12 h-12 bg-white/10 rounded-full" />
                 </div>
 
                 {/* Game Info */}
                 <div className="p-5">
-                  <h3 className="font-bold text-purple-900 text-lg mb-2">{game.title}</h3>
-                  <p className="text-purple-600/60 text-sm leading-relaxed mb-3">{game.description}</p>
+                  <h3 className="font-bold text-sky-900 text-lg mb-2">{game.title}</h3>
+                  <p className="text-sky-600/60 text-sm leading-relaxed mb-3">{game.description}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className={`text-xs px-2 py-1 rounded-lg font-medium ${
-                        game.difficulty === 'سهل' ? 'bg-green-100 text-green-700' :
-                        game.difficulty === 'متوسط' ? 'bg-yellow-100 text-yellow-700' :
+                        game.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
+                        game.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
                         'bg-red-100 text-red-700'
                       }`}>
                         {game.difficulty}
                       </span>
-                      <span className="text-xs px-2 py-1 rounded-lg bg-purple-100 text-purple-700 font-medium">
+                      <span className="text-xs px-2 py-1 rounded-lg bg-sky-100 text-sky-700 font-medium">
                         {game.players}
                       </span>
                     </div>
-                    <div className={`w-8 h-8 rounded-full bg-gradient-to-l ${game.color} text-white flex items-center justify-center text-sm shadow-md ${
+                    <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${game.color} text-white flex items-center justify-center text-sm shadow-md ${
                       game.playable ? '' : 'opacity-50'
                     }`}>
                       ▶
@@ -256,13 +254,12 @@ export default function GamesSection() {
                 </div>
               </Link>
 
-              {/* Hover overlay for playable games */}
               {game.playable && (
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-purple-900/80 via-purple-900/20 to-transparent flex items-end justify-center pb-6 sm:pb-8 pointer-events-none opacity-0 group-hover:opacity-100 [@media(hover:none)]:opacity-100 [@media(hover:none)]:from-purple-900/50 transition-opacity"
+                  className="absolute inset-0 bg-gradient-to-t from-sky-900/80 via-sky-900/20 to-transparent flex items-end justify-center pb-6 sm:pb-8 pointer-events-none opacity-0 group-hover:opacity-100 [@media(hover:none)]:opacity-100 [@media(hover:none)]:from-sky-900/50 transition-opacity"
                 >
-                  <div className={`bg-gradient-to-l ${game.color} text-white px-6 py-3 rounded-xl font-bold shadow-xl`}>
-                    العب الآن! 🎮
+                  <div className={`bg-gradient-to-r ${game.color} text-white px-6 py-3 rounded-xl font-bold shadow-xl`}>
+                    Play Now! 🎮
                   </div>
                 </motion.div>
               )}

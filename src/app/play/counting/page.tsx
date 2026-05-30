@@ -7,10 +7,10 @@ import FullscreenGame from '@/components/kopisto/FullscreenGame'
 
 export default function CountingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-purple-50 relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-teal-50 relative overflow-x-hidden">
       <Navbar />
-      <main className="pt-24">
-        <FullscreenGame colorTheme="purple">
+      <main className="flex-1 pt-24">
+        <FullscreenGame colorTheme="teal">
           <CountingGame />
         </FullscreenGame>
       </main>
