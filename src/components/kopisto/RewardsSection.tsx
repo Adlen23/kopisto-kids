@@ -77,7 +77,7 @@ export default function RewardsSection() {
             </div>
             <p className="text-white/80 mb-6">أكمل 3 ألعاب يومياً لمدة أسبوع واحصل على شارة المحارب!</p>
 
-            <div className="flex items-center gap-3 justify-center md:justify-start">
+            <div className="flex items-center gap-2 sm:gap-3 justify-center md:justify-start overflow-x-auto no-scrollbar pb-2 -mx-2 px-2">
               {weeklyProgress.map((day, i) => (
                 <motion.div
                   key={day.day}
@@ -87,14 +87,14 @@ export default function RewardsSection() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                 >
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm font-bold ${
                     day.completed
                       ? 'bg-yellow-300 text-purple-900 shadow-lg'
                       : 'bg-white/20 text-white/60 border border-white/30'
                   }`}>
                     {day.completed ? '⭐' : (i + 1)}
                   </div>
-                  <span className="text-[10px] text-white/60">{day.day}</span>
+                  <span className="text-[9px] sm:text-[10px] text-white/60">{day.day}</span>
                 </motion.div>
               ))}
             </div>

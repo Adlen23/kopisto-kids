@@ -169,7 +169,7 @@ export default function GamesSection() {
 
         {/* Category Filter */}
         <motion.div
-          className="flex flex-wrap justify-center gap-2 mb-10"
+          className="flex gap-2 mb-10 overflow-x-auto no-scrollbar px-2 -mx-2 md:flex-wrap md:justify-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -259,7 +259,7 @@ export default function GamesSection() {
               {/* Hover overlay for playable games */}
               {game.playable && (
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-purple-900/80 via-purple-900/20 to-transparent flex items-end justify-center pb-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute inset-0 bg-gradient-to-t from-purple-900/80 via-purple-900/20 to-transparent flex items-end justify-center pb-6 sm:pb-8 pointer-events-none opacity-0 group-hover:opacity-100 [@media(hover:none)]:opacity-100 [@media(hover:none)]:from-purple-900/50 transition-opacity"
                 >
                   <div className={`bg-gradient-to-l ${game.color} text-white px-6 py-3 rounded-xl font-bold shadow-xl`}>
                     العب الآن! 🎮

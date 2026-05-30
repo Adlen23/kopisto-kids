@@ -219,3 +219,49 @@
 /* No scrollbar for horizontal scroll */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Mobile-first optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Touch optimizations */
+html {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Prevent iOS bounce scroll on game canvases */
+canvas {
+  touch-action: none;
+}
+
+/* Mobile card tap effect */
+@media (hover: none) {
+  .game-card:active {
+    transform: translateY(-4px) scale(1.02);
+  }
+}
+
+/* Safe area support for notched phones */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Prevent text selection in game areas */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Mobile touch target minimum */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+}

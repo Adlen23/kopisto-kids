@@ -533,17 +533,39 @@ export default function LetterAdventureGame() {
         />
       </div>
 
-      {/* Mobile Controls */}
-      <div className="flex justify-center gap-3 mt-4 md:hidden">
-        <button className="w-14 h-14 bg-amber-100 rounded-xl text-2xl active:bg-amber-300 select-none"
-          onTouchStart={() => keysRef.current.add('ArrowLeft')}
-          onTouchEnd={() => keysRef.current.delete('ArrowLeft')}>←</button>
-        <button className="w-14 h-14 bg-amber-100 rounded-xl text-2xl active:bg-amber-300 select-none"
-          onTouchStart={() => keysRef.current.add('ArrowUp')}
-          onTouchEnd={() => keysRef.current.delete('ArrowUp')}>↑</button>
-        <button className="w-14 h-14 bg-amber-100 rounded-xl text-2xl active:bg-amber-300 select-none"
-          onTouchStart={() => keysRef.current.add('ArrowRight')}
-          onTouchEnd={() => keysRef.current.delete('ArrowRight')}>→</button>
+      {/* Mobile Controls - Dual zone layout */}
+      <div className="md:hidden mt-4 no-select">
+        <div className="flex items-center justify-between max-w-lg mx-auto px-4">
+          {/* Left zone: Movement */}
+          <div className="flex gap-2">
+            <button
+              className="w-16 h-16 bg-amber-100/80 backdrop-blur-sm rounded-2xl text-2xl active:bg-amber-300 select-none flex items-center justify-center shadow-md border-2 border-amber-200/50 touch-target"
+              onTouchStart={(e) => { e.preventDefault(); keysRef.current.add('ArrowLeft') }}
+              onTouchEnd={() => keysRef.current.delete('ArrowLeft')}
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              ←
+            </button>
+            <button
+              className="w-16 h-16 bg-amber-100/80 backdrop-blur-sm rounded-2xl text-2xl active:bg-amber-300 select-none flex items-center justify-center shadow-md border-2 border-amber-200/50 touch-target"
+              onTouchStart={(e) => { e.preventDefault(); keysRef.current.add('ArrowRight') }}
+              onTouchEnd={() => keysRef.current.delete('ArrowRight')}
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              →
+            </button>
+          </div>
+
+          {/* Right zone: Jump */}
+          <button
+            className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full text-3xl text-white active:from-amber-500 active:to-orange-600 select-none flex items-center justify-center shadow-lg shadow-amber-300/50 border-2 border-amber-300/50 touch-target"
+            onTouchStart={(e) => { e.preventDefault(); keysRef.current.add('ArrowUp') }}
+            onTouchEnd={() => keysRef.current.delete('ArrowUp')}
+            onContextMenu={(e) => e.preventDefault()}
+          >
+            ↑
+          </button>
+        </div>
       </div>
 
       <div className="hidden md:flex justify-center gap-4 mt-4 text-sm text-amber-500">

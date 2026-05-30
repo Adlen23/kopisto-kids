@@ -77,7 +77,7 @@ export default function CountingGame() {
 
         {/* Game Area */}
         <motion.div
-          className="bg-white rounded-3xl p-8 shadow-xl border-2 border-purple-100 relative"
+          className="bg-white rounded-3xl p-4 sm:p-8 shadow-xl border-2 border-purple-100 relative"
           key={`${question.count}-${question.fruit}`}
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -86,7 +86,7 @@ export default function CountingGame() {
           {/* Confetti */}
           {showConfetti && (
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              {Array.from({ length: 20 }).map((_, i) => (
+              {Array.from({ length: 15 }).map((_, i) => (
                 <motion.div
                   key={i}
                   className="absolute text-lg"
@@ -117,7 +117,7 @@ export default function CountingGame() {
 
             {/* Fruits display */}
             <motion.div
-              className="flex flex-wrap items-center justify-center gap-3 min-h-[100px] bg-purple-50 rounded-2xl p-6"
+              className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 min-h-[80px] sm:min-h-[100px] bg-purple-50 rounded-2xl p-4 sm:p-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -125,7 +125,7 @@ export default function CountingGame() {
               {Array.from({ length: question.count }).map((_, i) => (
                 <motion.span
                   key={i}
-                  className="text-4xl"
+                  className="text-3xl sm:text-4xl"
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', delay: i * 0.1 }}
@@ -137,11 +137,11 @@ export default function CountingGame() {
           </div>
 
           {/* Answer Options */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {question.options.map((option) => (
               <motion.button
                 key={option}
-                className={`py-5 rounded-2xl font-bold text-2xl shadow-md border-2 transition-all ${
+                className={`py-4 sm:py-5 rounded-2xl font-bold text-xl sm:text-2xl shadow-md border-2 transition-all ${
                   feedback === null
                     ? 'bg-white border-purple-200 text-purple-700 hover:bg-purple-50 hover:border-purple-400'
                     : option === question.correct

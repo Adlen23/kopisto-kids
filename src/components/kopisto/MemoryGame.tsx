@@ -123,10 +123,10 @@ export default function MemoryGame() {
         </motion.div>
 
         {/* Game Stats */}
-        <div className="flex items-center justify-center gap-6 mb-8">
+        <div className="flex items-center justify-center gap-3 sm:gap-6 mb-8">
           <div className="bg-white rounded-xl px-4 py-2 shadow-md border border-purple-100">
-            <span className="text-sm text-purple-500">المحاولات</span>
-            <div className="text-xl font-bold text-purple-700">{moves}</div>
+            <span className="text-xs sm:text-sm text-purple-500">المحاولات</span>
+            <div className="text-base sm:text-xl font-bold text-purple-700">{moves}</div>
           </div>
           <motion.button
             className="bg-gradient-to-l from-purple-600 to-violet-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-purple-300/30 text-sm"
@@ -137,15 +137,15 @@ export default function MemoryGame() {
             لعبة جديدة 🔄
           </motion.button>
           <div className="bg-white rounded-xl px-4 py-2 shadow-md border border-purple-100">
-            <span className="text-sm text-purple-500">الأزواج</span>
-            <div className="text-xl font-bold text-purple-700">
+            <span className="text-xs sm:text-sm text-purple-500">الأزواج</span>
+            <div className="text-base sm:text-xl font-bold text-purple-700">
               {cards.filter(c => c.isMatched).length / 2}/{cardEmojis.length}
             </div>
           </div>
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-4 gap-3 max-w-md mx-auto">
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3 max-w-xs sm:max-w-md mx-auto">
           <AnimatePresence mode="popLayout">
             {cards.map((card) => (
               <motion.div
@@ -159,7 +159,7 @@ export default function MemoryGame() {
                 onClick={() => handleCardClick(card.id)}
               >
                 <div
-                  className={`w-full h-full rounded-xl flex items-center justify-center text-3xl transition-all duration-500 relative ${
+                  className={`w-full h-full rounded-xl flex items-center justify-center text-2xl sm:text-3xl transition-all duration-500 relative ${
                     card.isFlipped || card.isMatched
                       ? 'bg-gradient-to-br from-purple-100 to-violet-50 border-2 border-purple-200'
                       : 'bg-gradient-to-br from-purple-500 to-violet-600 border-2 border-purple-400 shadow-lg shadow-purple-300/30'
@@ -170,7 +170,7 @@ export default function MemoryGame() {
                   }}
                 >
                   <span
-                    className="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold"
+                    className="absolute inset-0 flex items-center justify-center text-white text-lg sm:text-2xl font-bold"
                     style={{ backfaceVisibility: 'hidden' }}
                   >
                     ?

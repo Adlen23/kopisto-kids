@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section id="hero" className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Large gradient blob */}
@@ -90,7 +90,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <motion.button
-              className="group relative bg-gradient-to-l from-purple-600 to-violet-500 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-purple-300/40 overflow-hidden"
+              className="group relative bg-gradient-to-l from-purple-600 to-violet-500 text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl font-bold text-base sm:text-lg shadow-xl shadow-purple-300/40 overflow-hidden"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -113,7 +113,7 @@ export default function HeroSection() {
             </motion.button>
 
             <motion.button
-              className="flex items-center gap-2 bg-white text-purple-700 px-8 py-4 rounded-2xl font-bold text-lg shadow-lg border-2 border-purple-100 hover:border-purple-300 transition-colors"
+              className="flex items-center gap-2 bg-white text-purple-700 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl font-bold text-base sm:text-lg shadow-lg border-2 border-purple-100 hover:border-purple-300 transition-colors"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -124,7 +124,7 @@ export default function HeroSection() {
 
           {/* Stats */}
           <motion.div
-            className="flex items-center gap-8 mt-10 justify-center lg:justify-start"
+            className="flex items-center gap-4 sm:gap-8 mt-10 justify-center lg:justify-start"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
@@ -163,7 +163,7 @@ export default function HeroSection() {
 
             {/* Character circle */}
             <motion.div
-              className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white shadow-2xl shadow-purple-300/50"
+              className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white shadow-2xl shadow-purple-300/50"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             >
@@ -181,7 +181,7 @@ export default function HeroSection() {
               className="absolute -top-4 -right-4 w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center text-xl shadow-lg"
               animate={{ rotate: 360 }}
               transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-              style={{ transformOrigin: '200px 200px' }}
+              style={{ transformOrigin: '150% 150%' }}
             >
               ⭐
             </motion.div>
@@ -189,7 +189,7 @@ export default function HeroSection() {
               className="absolute -bottom-2 -left-4 w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center text-lg shadow-lg"
               animate={{ rotate: -360 }}
               transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-              style={{ transformOrigin: '220px 180px' }}
+              style={{ transformOrigin: '170% 130%' }}
             >
               🎨
             </motion.div>
@@ -197,7 +197,7 @@ export default function HeroSection() {
               className="absolute top-1/2 -right-8 w-10 h-10 bg-pink-200 rounded-full flex items-center justify-center text-lg shadow-lg"
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-              style={{ transformOrigin: '180px 0px' }}
+              style={{ transformOrigin: '130% 0%' }}
             >
               🔢
             </motion.div>

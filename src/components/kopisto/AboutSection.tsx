@@ -34,7 +34,7 @@ export default function AboutSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-purple-200 to-violet-100 rounded-3xl rotate-6 scale-105" />
 
               <div className="relative bg-gradient-to-br from-purple-50 to-violet-50 rounded-3xl p-8 overflow-hidden">
-                <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
+                <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-80 md:h-80 mx-auto">
                   <motion.div
                     className="w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl"
                     animate={{ y: [0, -5, 0] }}
@@ -51,14 +51,14 @@ export default function AboutSection() {
 
                 {/* Floating badges around the image */}
                 <motion.div
-                  className="absolute top-4 -right-2 bg-yellow-300 rounded-full px-3 py-1.5 shadow-lg text-sm font-bold"
+                  className="absolute top-4 right-0 sm:-right-2 bg-yellow-300 rounded-full px-3 py-1.5 shadow-lg text-sm font-bold"
                   animate={{ y: [0, -5, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
                   ⭐ نجم التعلم
                 </motion.div>
                 <motion.div
-                  className="absolute bottom-8 -left-2 bg-purple-400 text-white rounded-full px-3 py-1.5 shadow-lg text-sm font-bold"
+                  className="absolute bottom-8 left-0 sm:-left-2 bg-purple-400 text-white rounded-full px-3 py-1.5 shadow-lg text-sm font-bold"
                   animate={{ y: [0, -5, 0] }}
                   transition={{ duration: 2.5, repeat: Infinity }}
                 >
