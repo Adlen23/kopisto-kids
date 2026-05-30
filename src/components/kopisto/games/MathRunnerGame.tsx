@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { drawKopistoSprite, SpriteState } from './KopistoSprite'
 
 interface Platform {
   x: number
@@ -56,8 +57,8 @@ interface GameState {
 const GRAVITY = 0.6
 const JUMP_FORCE = -12
 const MOVE_SPEED = 4
-const PLAYER_WIDTH = 40
-const PLAYER_HEIGHT = 50
+const PLAYER_WIDTH = 48
+const PLAYER_HEIGHT = 56
 const CANVAS_WIDTH = 800
 const CANVAS_HEIGHT = 500
 
@@ -277,58 +278,26 @@ export default function MathRunnerGame() {
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
 
-    // Load Kopisto character image
-    const kopistoImg = new Image()
-    kopistoImg.crossOrigin = 'anonymous'
-    kopistoImg.src = '/kopisto.jpeg'
+    const getSpriteState = (isMoving: boolean, isJumping: boolean, playerVY: number): SpriteState => {
+      if (isJumping && playerVY < 0) return 'jump'
+      if (isJumping && playerVY > 0) return 'fall'
+      if (isMoving) return 'walk'
+      return 'idle'
+    }
 
-    const drawKopisto = (ctx: CanvasRenderingContext2D, x: number, y: number, direction: number, frame: number, isMoving: boolean = false, isJumping: boolean = false) => {
-      ctx.save()
-      ctx.translate(x + PLAYER_WIDTH / 2, y + PLAYER_HEIGHT / 2)
-      ctx.scale(direction, 1)
-
-      // Squish/stretch animation
-      let scaleX = 1
-      let scaleY = 1
-      if (isJumping) {
-        scaleX = 0.85
-        scaleY = 1.15
-      } else if (isMoving) {
-        const bounce = Math.sin(frame * 0.3) * 0.05
-        scaleX = 1 + bounce
-        scaleY = 1 - bounce
-      }
-
-      // Shadow under character
-      ctx.fillStyle = 'rgba(0,0,0,0.15)'
-      ctx.beginPath()
-      ctx.ellipse(0, PLAYER_HEIGHT / 2 + 2, PLAYER_WIDTH * 0.4, 4, 0, 0, Math.PI * 2)
-      ctx.fill()
-
-      ctx.scale(scaleX, scaleY)
-
-      // Draw the actual Kopisto image
-      const imgW = PLAYER_WIDTH + 10
-      const imgH = PLAYER_HEIGHT + 10
-      if (kopistoImg.complete && kopistoImg.naturalWidth > 0) {
-        ctx.beginPath()
-        ctx.arc(0, 0, imgW / 2, 0, Math.PI * 2)
-        ctx.clip()
-        ctx.drawImage(kopistoImg, -imgW / 2, -imgH / 2, imgW, imgH)
-      } else {
-        // Fallback while loading
-        ctx.fillStyle = '#8B5CF6'
-        ctx.beginPath()
-        ctx.arc(0, 0, PLAYER_WIDTH / 2, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.fillStyle = '#FFFFFF'
-        ctx.font = 'bold 16px Fredoka, sans-serif'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText('ك', 0, 0)
-      }
-
-      ctx.restore()
+    const drawKopisto = (ctx: CanvasRenderingContext2D, x: number, y: number, direction: number, frame: number, isMoving: boolean = false, isJumping: boolean = false, playerVY: number = 0) => {
+      const state = getSpriteState(isMoving, isJumping, playerVY)
+      drawKopistoSprite({
+        ctx,
+        x,
+        y,
+        width: PLAYER_WIDTH,
+        height: PLAYER_HEIGHT,
+        direction: direction as 1 | -1,
+        state,
+        frame,
+        isMoving,
+      })
     }
 
     const drawPlatform = (ctx: CanvasRenderingContext2D, p: Platform, cameraX: number) => {
@@ -535,7 +504,7 @@ export default function MathRunnerGame() {
         drawBackground(ctx, g.cameraX, g.frameCount)
         for (const p of ld.platforms) drawPlatform(ctx, p, g.cameraX)
         for (const c of ld.collectibles) drawCollectible(ctx, c, g.cameraX, g.frameCount)
-        drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, false, false)
+        drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, false, false, g.playerVY)
         drawParticles(ctx)
         drawHUD(ctx, g)
         animFrameRef.current = requestAnimationFrame(gameLoop)
@@ -664,7 +633,7 @@ export default function MathRunnerGame() {
       drawBackground(ctx, g.cameraX, g.frameCount)
       for (const p of ld.platforms) drawPlatform(ctx, p, g.cameraX)
       for (const c of ld.collectibles) drawCollectible(ctx, c, g.cameraX, g.frameCount)
-      drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, isMoving, g.isJumping)
+      drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, isMoving, g.isJumping, g.playerVY)
       drawParticles(ctx)
       drawHUD(ctx, g)
 

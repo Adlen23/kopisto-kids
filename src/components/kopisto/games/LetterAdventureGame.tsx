@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { drawKopistoSprite, SpriteState } from './KopistoSprite'
 
 interface Platform {
   x: number
@@ -29,8 +30,8 @@ const ARABIC_LETTERS = ['أ', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', '�
 const GRAVITY = 0.6
 const JUMP_FORCE = -12
 const MOVE_SPEED = 4
-const PLAYER_WIDTH = 40
-const PLAYER_HEIGHT = 50
+const PLAYER_WIDTH = 48
+const PLAYER_HEIGHT = 56
 const CANVAS_WIDTH = 800
 const CANVAS_HEIGHT = 500
 
@@ -205,58 +206,26 @@ export default function LetterAdventureGame() {
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
 
-    // Load Kopisto character image
-    const kopistoImg = new Image()
-    kopistoImg.crossOrigin = 'anonymous'
-    kopistoImg.src = '/kopisto.jpeg'
+    const getSpriteState = (isMoving: boolean, isOnGround: boolean, playerVY: number): SpriteState => {
+      if (!isOnGround && playerVY < 0) return 'jump'
+      if (!isOnGround && playerVY > 0) return 'fall'
+      if (isMoving) return 'walk'
+      return 'idle'
+    }
 
-    const drawKopisto = (ctx: CanvasRenderingContext2D, x: number, y: number, dir: number, frame: number, isMoving: boolean, isJumping: boolean) => {
-      ctx.save()
-      ctx.translate(x + PLAYER_WIDTH / 2, y + PLAYER_HEIGHT / 2)
-      ctx.scale(dir, 1)
-
-      // Squish/stretch animation
-      let scaleX = 1
-      let scaleY = 1
-      if (isJumping) {
-        scaleX = 0.85
-        scaleY = 1.15
-      } else if (isMoving) {
-        const bounce = Math.sin(frame * 0.3) * 0.05
-        scaleX = 1 + bounce
-        scaleY = 1 - bounce
-      }
-
-      // Shadow under character
-      ctx.fillStyle = 'rgba(0,0,0,0.15)'
-      ctx.beginPath()
-      ctx.ellipse(0, PLAYER_HEIGHT / 2 + 2, PLAYER_WIDTH * 0.4, 4, 0, 0, Math.PI * 2)
-      ctx.fill()
-
-      ctx.scale(scaleX, scaleY)
-
-      // Draw the actual Kopisto image
-      const imgW = PLAYER_WIDTH + 10
-      const imgH = PLAYER_HEIGHT + 10
-      if (kopistoImg.complete && kopistoImg.naturalWidth > 0) {
-        ctx.beginPath()
-        ctx.arc(0, 0, imgW / 2, 0, Math.PI * 2)
-        ctx.clip()
-        ctx.drawImage(kopistoImg, -imgW / 2, -imgH / 2, imgW, imgH)
-      } else {
-        // Fallback while loading
-        ctx.fillStyle = '#8B5CF6'
-        ctx.beginPath()
-        ctx.arc(0, 0, PLAYER_WIDTH / 2, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.fillStyle = '#FFFFFF'
-        ctx.font = 'bold 16px Fredoka, sans-serif'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText('ك', 0, 0)
-      }
-
-      ctx.restore()
+    const drawKopisto = (ctx: CanvasRenderingContext2D, x: number, y: number, dir: number, frame: number, isMoving: boolean, isOnGround: boolean) => {
+      const state = getSpriteState(isMoving, isOnGround, g.playerVY)
+      drawKopistoSprite({
+        ctx,
+        x,
+        y,
+        width: PLAYER_WIDTH,
+        height: PLAYER_HEIGHT,
+        direction: dir as 1 | -1,
+        state,
+        frame,
+        isMoving,
+      })
     }
 
     const drawPlatform = (ctx: CanvasRenderingContext2D, p: Platform, camX: number) => {
@@ -434,7 +403,7 @@ export default function LetterAdventureGame() {
         drawBackground(ctx, g.cameraX)
         for (const p of ld.platforms) drawPlatform(ctx, p, g.cameraX)
         for (const orb of ld.letters) drawLetterOrb(ctx, orb, g.cameraX, g.frameCount, orb.order === g.nextLetterIdx)
-        drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, false, false)
+        drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, false, true)
         drawHUD(ctx)
         animFrameRef.current = requestAnimationFrame(gameLoop)
         return
@@ -538,7 +507,7 @@ export default function LetterAdventureGame() {
       drawBackground(ctx, g.cameraX)
       for (const p of ld.platforms) drawPlatform(ctx, p, g.cameraX)
       for (const orb of ld.letters) drawLetterOrb(ctx, orb, g.cameraX, g.frameCount, orb.order === g.nextLetterIdx)
-      drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, isMoving, !g.isOnGround)
+      drawKopisto(ctx, g.playerX - g.cameraX, g.playerY, g.direction, g.frameCount, isMoving, g.isOnGround)
       drawHUD(ctx)
 
       animFrameRef.current = requestAnimationFrame(gameLoop)
