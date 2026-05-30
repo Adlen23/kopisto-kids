@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 const footerLinks = {
@@ -44,7 +43,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-purple-400">
                 <Image
-                  src="/kopisto.jpeg"
+                  src="/kopisto.webp"
                   alt="كوبيستو"
                   width={48}
                   height={48}
@@ -58,14 +57,12 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3">
               {['📱', '💻', '🎮'].map((icon, i) => (
-                <motion.div
+                <div
                   key={i}
-                  className="w-10 h-10 bg-purple-800/50 rounded-xl flex items-center justify-center text-lg hover:bg-purple-700/50 cursor-pointer transition-colors"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
+                  className="w-10 h-10 bg-purple-800/50 rounded-xl flex items-center justify-center text-lg hover:bg-purple-700/50 cursor-pointer transition-all duration-200 hover:scale-110 hover:-translate-y-0.5 active:scale-90"
                 >
                   {icon}
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -116,13 +113,11 @@ export default function Footer() {
                 placeholder="بريدك الإلكتروني"
                 className="flex-1 bg-purple-800/50 border border-purple-600/30 rounded-xl px-3 py-2.5 text-sm placeholder:text-purple-400/50 focus:outline-none focus:border-purple-400 transition-colors"
               />
-              <motion.button
-                className="bg-gradient-to-l from-purple-500 to-violet-500 px-4 py-2.5 rounded-xl text-sm font-bold"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
+                className="bg-gradient-to-l from-purple-500 to-violet-500 px-4 py-2.5 rounded-xl text-sm font-bold hover:scale-105 active:scale-95 transition-transform"
               >
                 اشترك
-              </motion.button>
+              </button>
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   keywords: ["كوبيستو", "ألعاب تعليمية", "أطفال", "تعلم", "ترفيه", "ألعاب أطفال"],
   authors: [{ name: "كوبيستو" }],
   icons: {
-    icon: "/kopisto.jpeg",
+    icon: "/kopisto-small.webp",
   },
 };
 

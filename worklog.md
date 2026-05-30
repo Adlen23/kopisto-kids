@@ -110,3 +110,83 @@ Stage Summary:
 - Body scroll lock and backdrop for mobile menu
 - Dual-zone game controls for simultaneous move+jump
 - All changes compile and pass lint checks
+
+---
+Task ID: 3
+Agent: Mobile Performance Optimization Agent
+Task: Optimize Kopisto Kids website for mobile performance by removing Framer Motion from non-game components and switching to WebP images
+
+Work Log:
+- Updated all image references from kopisto.jpeg to kopisto.webp:
+  - Navbar.tsx: changed logo to /kopisto-small.webp (11KB thumbnail)
+  - HeroSection.tsx: changed to /kopisto.webp (93KB compressed)
+  - AboutSection.tsx: changed to /kopisto.webp
+  - Footer.tsx: changed to /kopisto.webp
+  - CTASection.tsx: changed to /kopisto.webp
+  - layout.tsx: changed favicon to /kopisto-small.webp
+  - Verified zero remaining references to kopisto.jpeg in src/
+- Replaced Framer Motion with CSS-only animations in Navbar.tsx:
+  - Removed all motion.* and AnimatePresence usage
+  - Replaced spring animation nav entrance with CSS animate-slide-down
+  - Replaced hamburger icon animations with CSS transitions (transition-all duration-300)
+  - Replaced mobile dropdown AnimatePresence with CSS max-h transition
+  - Replaced motion.div active dot with static span
+  - Replaced motion.button whileHover/whileTap with CSS hover:scale-105 active:scale-95
+  - Used requestAnimationFrame wrapper for pathname useEffect to avoid lint error
+- Replaced Framer Motion with pure CSS in FloatingElements.tsx:
+  - Converted from 'use client' component to Server Component (no JS at all)
+  - Removed useMemo, generateElements(), and all JS logic
+  - Hardcoded 10 static elements (5 visible on mobile, 5 desktop-only via hidden/md:block)
+  - All animation via animate-float-slow CSS class with inline style for duration/delay
+- Replaced Framer Motion with CSS in HeroSection.tsx:
+  - Removed all motion.* imports and usage
+  - Replaced motion.div entrance animations with CSS animate-slide-up, animate-pop-in, animate-fade-in
+  - Replaced motion.span underline scaleX with CSS animate-scale-x
+  - Replaced motion.button whileHover/whileTap with CSS active:scale-95 transition-transform
+  - Replaced motion.div floating character with CSS animate-float class
+  - Replaced motion.div orbiting elements with CSS animate-rotate-slow
+  - Replaced motion.div speech bubble with CSS animate-pop-in
+  - Added responsive sizes attribute on Image component for better loading
+  - Hidden some decorative circles on mobile (hidden md:block)
+- Replaced Framer Motion with CSS in AboutSection.tsx:
+  - Removed motion import and all motion.* usage
+  - Replaced motion.div whileInView animations with CSS animate-slide-up
+  - Replaced motion.div floating badges with CSS animate-bounce-soft
+  - Replaced motion.span wiggle with CSS animate-bounce-soft
+  - Replaced motion.div fun facts with static divs (no whileInView stagger)
+  - Replaced motion.button with plain button + CSS active:scale-95 transition-transform
+  - Added responsive sizes attribute on Image component
+- Replaced Framer Motion with CSS in Footer.tsx:
+  - Removed motion import and all motion.* usage
+  - Replaced motion.div icon buttons with plain divs + CSS hover:scale-110 active:scale-90 transition
+  - Replaced motion.button subscribe with plain button + CSS hover:scale-105 active:scale-95
+- Replaced Framer Motion with CSS in CTASection.tsx:
+  - Removed motion import and all motion.* usage
+  - Replaced motion.div wrapper with plain div + CSS animate-slide-up
+  - Replaced motion.div floating character with CSS animate-float
+  - Replaced motion.button whileHover/whileTap with CSS hover:scale-105 active:scale-95 transition
+- Added new CSS animations to globals.css:
+  - .animate-slide-down with @keyframes slide-down (navbar entrance)
+  - .animate-fade-in with @keyframes fade-in (stats section)
+  - .animate-scale-x with @keyframes scale-x (hero underline)
+- Added GPU/performance optimizations to globals.css:
+  - will-change: transform on animated elements (.animate-float, .animate-float-slow, .animate-bounce-soft, .animate-blob)
+  - content-visibility: auto on sections for off-screen rendering optimization
+  - contain-intrinsic-size: auto 500px for content-visibility
+  - Disabled backdrop-blur-xl on mobile (<768px) for GPU savings
+  - Disabled .animate-blob on mobile for GPU savings
+  - Reduced shadow-2xl on mobile to lighter shadow
+- Fixed lint error: wrapped setIsMenuOpen(false) in requestAnimationFrame to avoid setState-in-effect rule
+- Verified build compiles successfully (npx next build)
+- Verified lint passes with zero errors (bun run lint)
+
+Stage Summary:
+- Removed Framer Motion from 6 non-game components (Navbar, FloatingElements, HeroSection, AboutSection, Footer, CTASection)
+- FloatingElements converted to Server Component (zero JS shipped)
+- All image references updated from 3.3MB JPEG to 93KB WebP (97% size reduction)
+- Favicon updated to 11KB small WebP
+- Added 3 new CSS animation keyframes replacing JS animations
+- Added GPU acceleration hints and mobile-specific performance optimizations
+- Content visibility optimization for off-screen sections
+- Mobile-specific overrides: no backdrop-blur, no blob animation, lighter shadows
+- Build and lint pass cleanly
