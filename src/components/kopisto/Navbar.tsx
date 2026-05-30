@@ -3,17 +3,25 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   const navItems = [
-    { label: 'الرئيسية', icon: '🏠', href: '#hero' },
-    { label: 'الألعاب', icon: '🎮', href: '#games' },
-    { label: 'تعلّم', icon: '📚', href: '#learn' },
-    { label: 'كوبيستو', icon: '🦊', href: '#about' },
-    { label: 'الجوائز', icon: '🏆', href: '#rewards' },
+    { label: 'الرئيسية', icon: '🏠', href: '/' },
+    { label: 'الألعاب', icon: '🎮', href: '/games' },
+    { label: 'تعلّم', icon: '📚', href: '/learn' },
+    { label: 'كوبيستو', icon: '🦊', href: '/about' },
+    { label: 'الجوائز', icon: '🏆', href: '/rewards' },
   ]
+
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/'
+    return pathname.startsWith(href)
+  }
 
   return (
     <motion.nav
@@ -26,52 +34,67 @@ export default function Navbar() {
         <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-purple-200/50 border border-purple-100 px-4 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <motion.div
-              className="flex items-center gap-3"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-400 shadow-md">
-                <Image
-                  src="/kopisto.jpeg"
-                  alt="كوبيستو"
-                  width={40}
-                  height={40}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-l from-purple-600 to-violet-500 bg-clip-text text-transparent">
-                كوبيستو
-              </span>
-            </motion.div>
+            <Link href="/">
+              <motion.div
+                className="flex items-center gap-3"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-400 shadow-md">
+                  <Image
+                    src="/kopisto.jpeg"
+                    alt="كوبيستو"
+                    width={40}
+                    height={40}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                <span className="text-xl font-bold bg-gradient-to-l from-purple-600 to-violet-500 bg-clip-text text-transparent">
+                  كوبيستو
+                </span>
+              </motion.div>
+            </Link>
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-1">
               {navItems.map((item, i) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium text-purple-800 hover:bg-purple-50 transition-colors"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className="text-base">{item.icon}</span>
-                  {item.label}
-                </motion.a>
+                <Link key={item.href} href={item.href}>
+                  <motion.div
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                      isActive(item.href)
+                        ? 'bg-purple-100 text-purple-700'
+                        : 'text-purple-800 hover:bg-purple-50'
+                    }`}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="text-base">{item.icon}</span>
+                    {item.label}
+                    {isActive(item.href) && (
+                      <motion.div
+                        className="w-1.5 h-1.5 rounded-full bg-purple-600"
+                        layoutId="activeNav"
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </motion.div>
+                </Link>
               ))}
             </div>
 
             {/* CTA Button */}
-            <motion.button
-              className="hidden md:flex items-center gap-2 bg-gradient-to-l from-purple-600 to-violet-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg shadow-purple-300/50"
-              whileHover={{ scale: 1.05, boxShadow: '0 10px 30px rgba(139, 92, 246, 0.4)' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              ابدأ اللعب! 🎮
-            </motion.button>
+            <Link href="/games">
+              <motion.button
+                className="hidden md:flex items-center gap-2 bg-gradient-to-l from-purple-600 to-violet-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg shadow-purple-300/50"
+                whileHover={{ scale: 1.05, boxShadow: '0 10px 30px rgba(139, 92, 246, 0.4)' }}
+                whileTap={{ scale: 0.95 }}
+              >
+                ابدأ اللعب! 🎮
+              </motion.button>
+            </Link>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -102,19 +125,26 @@ export default function Navbar() {
           >
             <div className="pt-3 pb-1 flex flex-col gap-1">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-purple-800 hover:bg-purple-50 transition-colors"
                 >
-                  <span className="text-base">{item.icon}</span>
-                  {item.label}
-                </a>
+                  <div className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                    isActive(item.href)
+                      ? 'bg-purple-100 text-purple-700'
+                      : 'text-purple-800 hover:bg-purple-50'
+                  }`}>
+                    <span className="text-base">{item.icon}</span>
+                    {item.label}
+                  </div>
+                </Link>
               ))}
-              <button className="flex items-center justify-center gap-2 bg-gradient-to-l from-purple-600 to-violet-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm mt-2 shadow-lg shadow-purple-300/50">
-                ابدأ اللعب! 🎮
-              </button>
+              <Link href="/games" onClick={() => setIsMenuOpen(false)}>
+                <button className="w-full flex items-center justify-center gap-2 bg-gradient-to-l from-purple-600 to-violet-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm mt-2 shadow-lg shadow-purple-300/50">
+                  ابدأ اللعب! 🎮
+                </button>
+              </Link>
             </div>
           </motion.div>
         </div>
