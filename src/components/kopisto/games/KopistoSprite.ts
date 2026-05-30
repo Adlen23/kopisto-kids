@@ -18,81 +18,86 @@ interface DrawKopistoOptions {
   isMoving?: boolean
 }
 
-// Sprite image cache - loaded once and reused
-let idleImage: HTMLImageElement | null = null
-let runImage: HTMLImageElement | null = null
-let idleFlipImage: HTMLImageElement | null = null
-let runFlipImage: HTMLImageElement | null = null
-let imagesLoaded = false
-let imagesLoading = false
+// Global sprite image cache - shared across all game instances
+const spriteCache: Record<string, HTMLImageElement> = {}
+let spritesReady = false
+let spritesLoading = false
 
-function loadImages(): Promise<void> {
-  if (imagesLoaded) return Promise.resolve()
-  if (imagesLoading) return new Promise((resolve) => {
-    const check = setInterval(() => {
-      if (imagesLoaded) { clearInterval(check); resolve() }
-    }, 50)
-  })
-
-  imagesLoading = true
-
-  return new Promise((resolve) => {
-    let loaded = 0
-    const total = 4
-    const onLoad = () => {
-      loaded++
-      if (loaded >= total) {
-        imagesLoaded = true
-        imagesLoading = false
-        resolve()
-      }
-    }
-
-    const onError = () => {
-      // Fallback: if image fails, still resolve so game doesn't hang
-      loaded++
-      if (loaded >= total) {
-        imagesLoaded = true
-        imagesLoading = false
-        resolve()
-      }
-    }
-
-    idleImage = new Image()
-    idleImage.onload = onLoad
-    idleImage.onerror = onError
-    idleImage.src = '/kopisto-idle.webp'
-
-    runImage = new Image()
-    runImage.onload = onLoad
-    runImage.onerror = onError
-    runImage.src = '/kopisto-run.webp'
-
-    idleFlipImage = new Image()
-    idleFlipImage.onload = onLoad
-    idleFlipImage.onerror = onError
-    idleFlipImage.src = '/kopisto-idle-flip.webp'
-
-    runFlipImage = new Image()
-    runFlipImage.onload = onLoad
-    runFlipImage.onerror = onError
-    runFlipImage.src = '/kopisto-run-flip.webp'
-  })
+function getSpritesReady(): boolean {
+  return spritesReady
 }
 
-// Start loading images immediately
+function loadSprites(): void {
+  if (spritesReady || spritesLoading) return
+  spritesLoading = true
+
+  const spriteList = [
+    { key: 'idle', src: '/kopisto-idle.webp' },
+    { key: 'run', src: '/kopisto-run.webp' },
+    { key: 'idleFlip', src: '/kopisto-idle-flip.webp' },
+    { key: 'runFlip', src: '/kopisto-run-flip.webp' },
+  ]
+
+  let loaded = 0
+  const total = spriteList.length
+
+  for (const sprite of spriteList) {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+
+    img.onload = () => {
+      spriteCache[sprite.key] = img
+      loaded++
+      if (loaded >= total) {
+        spritesReady = true
+        spritesLoading = false
+      }
+    }
+
+    img.onerror = () => {
+      console.warn(`Failed to load sprite: ${sprite.src}`)
+      loaded++
+      if (loaded >= total) {
+        spritesReady = true
+        spritesLoading = false
+      }
+    }
+
+    img.src = sprite.src
+  }
+}
+
+// Auto-load sprites on first import in browser
 if (typeof window !== 'undefined') {
-  loadImages()
+  loadSprites()
 }
 
 export function drawKopistoSprite(options: DrawKopistoOptions) {
   const { ctx, x, y, width, height, direction, state, frame } = options
 
-  // If images not loaded yet, draw a placeholder
-  if (!imagesLoaded) {
+  // Ensure sprites are loading
+  if (typeof window !== 'undefined' && !spritesReady && !spritesLoading) {
+    loadSprites()
+  }
+
+  // If sprites not ready yet, draw placeholder
+  if (!getSpritesReady()) {
     drawPlaceholder(ctx, x, y, width, height)
-    // Trigger loading
-    loadImages()
+    return
+  }
+
+  // Select the correct sprite image
+  const facingRight = direction === 1
+  let currentImage: HTMLImageElement | undefined
+
+  if (state === 'walk') {
+    currentImage = facingRight ? spriteCache['run'] : spriteCache['runFlip']
+  } else {
+    currentImage = facingRight ? spriteCache['idle'] : spriteCache['idleFlip']
+  }
+
+  if (!currentImage || !currentImage.naturalWidth) {
+    drawPlaceholder(ctx, x, y, width, height)
     return
   }
 
@@ -132,7 +137,6 @@ export function drawKopistoSprite(options: DrawKopistoOptions) {
       bodyBob = -3
       scaleX = 0.88
       scaleY = 1.15
-      rotation = 0
       break
 
     case 'fall':
@@ -151,40 +155,10 @@ export function drawKopistoSprite(options: DrawKopistoOptions) {
       break
   }
 
-  // Select the correct sprite image
-  const facingRight = direction === 1
-  let currentImage: HTMLImageElement | null
-
-  if (state === 'walk') {
-    currentImage = facingRight ? runImage : runFlipImage
-  } else {
-    currentImage = facingRight ? idleImage : idleFlipImage
-  }
-
-  if (!currentImage) {
-    drawPlaceholder(ctx, x, y, width, height)
-    ctx.restore()
-    return
-  }
-
   // Calculate draw dimensions - maintain aspect ratio of the sprite image
   const imgAspect = currentImage.naturalWidth / currentImage.naturalHeight
   const targetHeight = height
   const targetWidth = targetHeight * imgAspect
-
-  // For walking animation - cycle between idle and run for frame animation effect
-  let drawWidth = targetWidth
-  let drawHeight = targetHeight
-
-  // For walk state, add a slight frame cycling effect
-  if (state === 'walk') {
-    // Alternate between slightly different scales to simulate frame cycling
-    const cyclePhase = Math.floor(frame / 6) % 2
-    if (cyclePhase === 1) {
-      // Slight alternate pose
-      bodyBob -= 1
-    }
-  }
 
   ctx.globalAlpha = opacity
   ctx.translate(cx, bottom + bodyBob)
@@ -197,14 +171,13 @@ export function drawKopistoSprite(options: DrawKopistoOptions) {
   ctx.ellipse(0, 0, width * 0.35, 4, 0, 0, Math.PI * 2)
   ctx.fill()
 
-  // Draw the sprite image centered at the bottom center position
-  // The sprite bottom should align with the character's feet position
+  // Draw the sprite image - bottom center aligned
   ctx.drawImage(
     currentImage,
-    -drawWidth / 2,
-    -drawHeight,
-    drawWidth,
-    drawHeight
+    -targetWidth / 2,
+    -targetHeight,
+    targetWidth,
+    targetHeight
   )
 
   ctx.globalAlpha = 1

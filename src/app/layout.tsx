@@ -26,6 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <head>
+        <link rel="preload" href="/kopisto-idle.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/kopisto-run.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/kopisto-idle-flip.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/kopisto-run-flip.webp" as="image" type="image/webp" />
+      </head>
       <body
         className={`${fredoka.variable} antialiased bg-background text-foreground`}
         style={{ fontFamily: 'var(--font-fredoka), sans-serif' }}
