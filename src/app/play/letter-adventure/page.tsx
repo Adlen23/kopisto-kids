@@ -3,14 +3,13 @@
 import Navbar from '@/components/kopisto/Navbar'
 import LetterAdventureGame from '@/components/kopisto/games/LetterAdventureGame'
 import Footer from '@/components/kopisto/Footer'
-import FloatingElements from '@/components/kopisto/FloatingElements'
+import FullscreenGame from '@/components/kopisto/FullscreenGame'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
 export default function LetterAdventurePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-amber-50 relative overflow-x-hidden">
-      <FloatingElements />
       <Navbar />
       <main className="pt-24 pb-10">
         <div className="max-w-4xl mx-auto px-4">
@@ -29,8 +28,10 @@ export default function LetterAdventurePage() {
             <p className="text-purple-600/70">اجمع الحروف العربية بالترتيب الصحيح وتجنب الخاطئة!</p>
           </motion.div>
 
-          {/* Game */}
-          <LetterAdventureGame />
+          {/* Game with Fullscreen */}
+          <FullscreenGame colorTheme="amber">
+            <LetterAdventureGame />
+          </FullscreenGame>
         </div>
       </main>
       <Footer />

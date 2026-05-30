@@ -3,14 +3,13 @@
 import Navbar from '@/components/kopisto/Navbar'
 import MathRunnerGame from '@/components/kopisto/games/MathRunnerGame'
 import Footer from '@/components/kopisto/Footer'
-import FloatingElements from '@/components/kopisto/FloatingElements'
+import FullscreenGame from '@/components/kopisto/FullscreenGame'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
 export default function MathRunnerPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-purple-50 relative overflow-x-hidden">
-      <FloatingElements />
       <Navbar />
       <main className="pt-24 pb-10">
         <div className="max-w-4xl mx-auto px-4">
@@ -29,8 +28,10 @@ export default function MathRunnerPage() {
             <p className="text-purple-600/70">اقفز على المنصات واجمع الإجابة الصحيحة للسؤال الرياضي!</p>
           </motion.div>
 
-          {/* Game */}
-          <MathRunnerGame />
+          {/* Game with Fullscreen */}
+          <FullscreenGame colorTheme="purple">
+            <MathRunnerGame />
+          </FullscreenGame>
         </div>
       </main>
       <Footer />
