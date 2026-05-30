@@ -1,8 +1,10 @@
 /**
  * Kopisto 2D Animated Sprite - Image-Based System
- * Uses the actual Kopisto character images (idle & running) with realistic animations.
+ * Uses embedded base64 sprite images for reliable loading in all environments.
  * Applies squash & stretch, bobbing, and sprite cycling for Mario-style movement.
  */
+
+import { SPRITE_DATA } from './spriteData'
 
 export type SpriteState = 'idle' | 'walk' | 'jump' | 'fall' | 'hurt'
 
@@ -23,30 +25,19 @@ const spriteCache: Record<string, HTMLImageElement> = {}
 let spritesReady = false
 let spritesLoading = false
 
-function getSpritesReady(): boolean {
-  return spritesReady
-}
-
 function loadSprites(): void {
   if (spritesReady || spritesLoading) return
   spritesLoading = true
 
-  const spriteList = [
-    { key: 'idle', src: '/kopisto-idle.webp' },
-    { key: 'run', src: '/kopisto-run.webp' },
-    { key: 'idleFlip', src: '/kopisto-idle-flip.webp' },
-    { key: 'runFlip', src: '/kopisto-run-flip.webp' },
-  ]
-
+  const spriteKeys = ['idle', 'run', 'idleFlip', 'runFlip']
   let loaded = 0
-  const total = spriteList.length
+  const total = spriteKeys.length
 
-  for (const sprite of spriteList) {
+  for (const key of spriteKeys) {
     const img = new Image()
-    img.crossOrigin = 'anonymous'
 
     img.onload = () => {
-      spriteCache[sprite.key] = img
+      spriteCache[key] = img
       loaded++
       if (loaded >= total) {
         spritesReady = true
@@ -55,7 +46,7 @@ function loadSprites(): void {
     }
 
     img.onerror = () => {
-      console.warn(`Failed to load sprite: ${sprite.src}`)
+      console.warn(`Failed to load sprite: ${key}`)
       loaded++
       if (loaded >= total) {
         spritesReady = true
@@ -63,7 +54,8 @@ function loadSprites(): void {
       }
     }
 
-    img.src = sprite.src
+    // Use embedded base64 data URI - guaranteed to work in all environments
+    img.src = SPRITE_DATA[key]
   }
 }
 
@@ -81,7 +73,7 @@ export function drawKopistoSprite(options: DrawKopistoOptions) {
   }
 
   // If sprites not ready yet, draw placeholder
-  if (!getSpritesReady()) {
+  if (!spritesReady) {
     drawPlaceholder(ctx, x, y, width, height)
     return
   }
