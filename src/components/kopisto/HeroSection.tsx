@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useLanguage } from '@/context/LanguageContext'
 
 export default function HeroSection() {
-  const { t } = useLanguage()
+  const { t, isAr } = useLanguage()
 
   return (
     <section id="hero" className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20">
@@ -54,7 +54,7 @@ export default function HeroSection() {
       {/* Main Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
         {/* Text Content */}
-        <div className="flex-1 text-center lg:text-right animate-slide-up">
+        <div className={`flex-1 text-center ${isAr ? 'lg:text-right' : 'lg:text-left'} animate-slide-up`}>
           <div className="inline-flex items-center gap-2 bg-white/90 text-sky-700 px-5 py-2.5 rounded-full text-sm font-bold mb-6 shadow-lg border border-sky-100 animate-pop-in">
             <span className="animate-bounce-soft inline-block">🎉</span>
             {t.hero.badge}
@@ -74,11 +74,11 @@ export default function HeroSection() {
             {t.hero.subtitle}
           </p>
 
-          <p className="text-base md:text-lg text-sky-800/60 mb-8 max-w-lg mx-auto lg:mx-0 lg:mr-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+          <p className={`text-base md:text-lg text-sky-800/60 mb-8 max-w-lg mx-auto ${isAr ? 'lg:mr-0' : 'lg:ml-0 lg:mr-auto'} animate-slide-up`} style={{ animationDelay: '0.4s' }}>
             {t.hero.description}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start animate-slide-up" style={{ animationDelay: '0.6s' }}>
+          <div className={`flex flex-col sm:flex-row items-center gap-4 justify-center ${isAr ? 'lg:justify-start' : 'lg:justify-start'} animate-slide-up`} style={{ animationDelay: '0.6s' }}>
             <a href="/games" className="group relative bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl shadow-orange-300/40 overflow-hidden active:scale-95 transition-transform hover:scale-105">
               <span className="relative z-10 flex items-center gap-2">
                 {t.hero.cta} 🚀
@@ -87,27 +87,53 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Character Image */}
+        {/* Video + Character Area */}
         <div className="flex-1 relative flex justify-center animate-pop-in" style={{ animationDelay: '0.3s' }}>
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-white/10 rounded-full scale-125" />
+          <div className="relative w-full max-w-md">
+            {/* Looped Video - Main showcase */}
+            <div className="relative rounded-3xl overflow-hidden border-4 border-white shadow-2xl shadow-sky-300/50 animate-float">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full rounded-3xl object-cover"
+                style={{ aspectRatio: '16/10' }}
+              >
+                <source src="/interface.mp4" type="video/mp4" />
+              </video>
+              {/* Video overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-sky-900/10 to-transparent pointer-events-none rounded-3xl" />
+            </div>
 
-            <div className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[380px] lg:h-[380px] rounded-3xl overflow-hidden border-4 border-white shadow-2xl shadow-sky-300/50 animate-float">
+            {/* Kopisto character floating on top-right of video */}
+            <div className="absolute -top-6 -right-4 md:-top-8 md:-right-6 w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-4 border-white shadow-xl shadow-sky-300/40 animate-bounce-soft z-10">
               <Image
                 src="/kopisto.webp"
-                alt="Kopisto - Educational Games Character"
+                alt="Kopisto"
                 fill
                 className="object-cover"
                 priority
-                sizes="(max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 320px, 380px"
+                sizes="112px"
               />
             </div>
 
             {/* Speech bubble */}
-            <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white rounded-2xl rounded-tr-sm px-4 py-2 shadow-lg border border-sky-100 animate-pop-in" style={{ animationDelay: '1.5s' }}>
+            <div className="absolute -top-4 left-4 md:-top-6 md:left-6 bg-white rounded-2xl rounded-tr-sm px-4 py-2 shadow-lg border border-sky-100 animate-pop-in z-10" style={{ animationDelay: '1.5s' }}>
               <span className="text-sm font-bold text-sky-700">
                 {t.hero.badge} 👋
               </span>
+            </div>
+
+            {/* Decorative elements around video */}
+            <div className="absolute -bottom-3 -left-3 w-10 h-10 bg-yellow-300 rounded-full flex items-center justify-center text-base shadow-lg animate-rotate-slow" style={{ transformOrigin: '150% 150%' }}>
+              ⭐
+            </div>
+            <div className="absolute -bottom-3 -right-3 w-8 h-8 bg-sky-200 rounded-full flex items-center justify-center text-sm shadow-lg animate-rotate-slow" style={{ transformOrigin: '170% 130%', animationDirection: 'reverse', animationDuration: '25s' }}>
+              🎨
+            </div>
+            <div className="absolute top-1/2 -left-5 w-6 h-6 bg-orange-200 rounded-full flex items-center justify-center text-xs shadow-lg animate-bounce-soft" style={{ animationDelay: '1s' }}>
+              ✨
             </div>
           </div>
         </div>

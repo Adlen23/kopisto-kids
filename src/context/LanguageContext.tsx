@@ -8,15 +8,27 @@ interface LanguageContextType {
   setLocale: (locale: Locale) => void
   t: typeof translations.ar
   dir: 'rtl' | 'ltr'
+  isAr: boolean
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('ar')
+  const [mounted, setMounted] = useState(false)
+
+  // Load saved locale from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('kobisto-locale') as Locale | null
+    if (saved === 'ar' || saved === 'en') {
+      setLocaleState(saved)
+    }
+    setMounted(true)
+  }, [])
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale)
+    localStorage.setItem('kobisto-locale', newLocale)
   }, [])
 
   useEffect(() => {
@@ -27,9 +39,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const t = translations[locale]
   const dir = locale === 'ar' ? 'rtl' as const : 'ltr' as const
+  const isAr = locale === 'ar'
 
   return (
-    <LanguageContext.Provider value={{ locale, setLocale, t, dir }}>
+    <LanguageContext.Provider value={{ locale, setLocale, t, dir, isAr }}>
       {children}
     </LanguageContext.Provider>
   )
