@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface Game {
   id: number
@@ -17,6 +18,7 @@ interface Game {
   href: string
   playable: boolean
   tag?: string
+  coverImage?: string
 }
 
 const games: Game[] = [
@@ -33,6 +35,7 @@ const games: Game[] = [
     href: '/play/math-runner',
     playable: true,
     tag: 'New',
+    coverImage: '/math-adventure.jpeg',
   },
   {
     id: 2,
@@ -47,6 +50,7 @@ const games: Game[] = [
     href: '/play/letter-adventure',
     playable: true,
     tag: 'New',
+    coverImage: '/word-puzzles.jpeg',
   },
   {
     id: 3,
@@ -87,6 +91,7 @@ const games: Game[] = [
     href: '#',
     playable: false,
     tag: 'Coming',
+    coverImage: '/science-explorer.jpeg',
   },
   {
     id: 6,
@@ -101,6 +106,7 @@ const games: Game[] = [
     href: '#',
     playable: false,
     tag: 'Coming',
+    coverImage: '/art-creativity.jpeg',
   },
   {
     id: 7,
@@ -208,24 +214,47 @@ export default function GamesSection() {
               }}
             >
               <Link href={game.playable ? game.href : '#'} className={`block ${!game.playable ? 'pointer-events-none' : ''}`}>
-                {/* Game Icon Area */}
-                <div className={`bg-gradient-to-bl ${game.gradient} p-6 flex items-center justify-center relative overflow-hidden`}>
-                  <motion.div
-                    className="text-5xl"
-                    whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {game.icon}
-                  </motion.div>
+                {/* Game Cover Image / Icon Area */}
+                <div className={`relative overflow-hidden ${game.coverImage ? 'h-44' : `bg-gradient-to-bl ${game.gradient} p-6 flex items-center justify-center`}`}>
+                  {game.coverImage ? (
+                    <>
+                      <Image
+                        src={game.coverImage}
+                        alt={game.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    </>
+                  ) : (
+                    <motion.div
+                      className="text-5xl"
+                      whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {game.icon}
+                    </motion.div>
+                  )}
                   {game.tag && (
-                    <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-lg text-xs font-bold ${
+                    <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-lg text-xs font-bold z-10 ${
                       game.tag === 'Coming' ? 'bg-gray-200 text-gray-600' : 'bg-orange-400 text-white'
                     }`}>
                       {game.tag}
                     </div>
                   )}
-                  <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-white/20 rounded-full" />
-                  <div className="absolute -top-3 -right-3 w-12 h-12 bg-white/10 rounded-full" />
+                  {/* Floating icon on cover images */}
+                  {game.coverImage && (
+                    <div className="absolute bottom-2 right-2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-xl shadow-md z-10">
+                      {game.icon}
+                    </div>
+                  )}
+                  {!game.coverImage && (
+                    <>
+                      <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-white/20 rounded-full" />
+                      <div className="absolute -top-3 -right-3 w-12 h-12 bg-white/10 rounded-full" />
+                    </>
+                  )}
                 </div>
 
                 {/* Game Info */}
